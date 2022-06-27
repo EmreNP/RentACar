@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspecs.Autofac;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -30,7 +31,11 @@ namespace Business.Concrete
             _colorDal.Delete(color);
             return new SuccessResult();
         }
-        [SecuredOperation("user")] 
+
+
+        
+        [SecuredOperation("user")]
+        [CacheAspect(30)]
         public IDataResult<List<Color>> GetAll()
         {
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
